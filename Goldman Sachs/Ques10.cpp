@@ -22,3 +22,5 @@ vector<int> kLargest(int arr[], int n, int k)
         sort(vt.begin(),vt.end(),greater<int>());
         return vt;
 }
+
+//Here k=10 and N=10 million
