@@ -1,55 +1,49 @@
 class Solution{
 public:
-    long long dp[30][30];
-    int bracket[30][30];
-
-    void printString(int i,int j,string &ans)
-    {   
-        if(i>j)
-        return;
-        if(i==j-1 or i==j)
-        {
-            ans+='A'+j-1;
-            return;
-        }
-        ans+='(';
-        printString(i,bracket[i][j],ans);
-        printString(bracket[i][j],j,ans);
-        ans+=')';
+    void OptimalParanthesis(int i, int j, int n, int brackets[101][101], char& name, string &s){
+    
+    if(i==j){
+    s.push_back(name++);
+    return;
     }
-    long long recurse(int i,int j,int arr[])
-    {
+    s.push_back('(');
+    
+    OptimalParanthesis(i,brackets[i][j], n, brackets, name,s);
+    OptimalParanthesis(brackets[i][j] + 1, j, n, brackets, name,s);
+    
+    s.push_back(')');
+    
+    
+}
+    
+string matrixChainOrder(int arr[], int n){
+    int t[101][101];
+    int brackets[101][101];
+
+    int i,j,k,temp;
+    int min=0;
+
+    for(int i=0;i<n;  i++){
+        t[i][i] = 0;
+    }
+
+    for(int L=2; L<n; L++){
+    for(int i=0; i<n-L+1; i++){
+        int j = i+L-1;
+        t[i][j] = INT_MAX;
+        for(int k=i; k<j; k++){
+            temp = t[i][k] + t[k+1][j] + arr[i-1]*arr[k]*arr[j];
         
-        if(i==j-1 or i==j)
-        {
-            bracket[i][j]=j;
-            return 0;
+        if(temp<t[i][j]){  t[i][j] = temp;
+            brackets[i][j] = k;
         }
-        if(dp[i][j]!=-1)
-        {
-            return dp[i][j];
         }
-        long long minm=INT_MAX;
-        int z=0;
-        for(int k=i+1;k<j;k++)
-        {
-            long long val=recurse(i,k,arr)+recurse(k,j,arr)+arr[i]*arr[k]*arr[j];
-            if(val<=minm)
-            {
-                minm=val;
-                z=k;
-            }
-        }   
-        bracket[i][j]=z;
-        return dp[i][j]=minm;
     }
-
-    string matrixChainOrder(int p[], int n)
-    {
-        memset(dp,-1,sizeof dp);
-        long long x=recurse(0,n-1,p);
-        string ans="";
-        printString(0,n-1,ans);
-        return ans;
     }
+    char name = 'A';
+    string s;
+    OptimalParanthesis(1,n-1, n, brackets , name, s);
+    return s;    
+    
+}
 };
