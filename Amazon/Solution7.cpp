@@ -1,5 +1,5 @@
 string FirstNonRepeating(string s)
-		{
+{
 		    deque<int> dq;
 		    int m[26]={0};
 		    string ans="";
