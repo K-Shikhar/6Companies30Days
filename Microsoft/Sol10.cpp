@@ -16,7 +16,7 @@ class Solution
         {
             return dp[1];
         }
-        else if(n==2)
+        else if(n==3)
         {
             return dp[2];
         }
