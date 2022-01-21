@@ -15,7 +15,7 @@ typedef long long ll;
         }
         else
         {
-            return dp[idx][p] = ((recur(N,k,p+1,idx+1,dp))%mod*5%mod  + (21%mod * recur(N,k,0,idx+1,dp)%mod)%mod)%mod;
+            return dp[idx][p] = ((recur(N,k,p+1,idx+1,dp))%mod*5%mod  + (recur(N,k,0,idx+1,dp)%mod)%mod * 21%mod)%mod;
         }
     }
     
