@@ -1,18 +1,22 @@
- typedef long long ll;
+typedef long long ll;
     const ll mod = 1000000007;
     
     
-    ll recur(int N,int k,int prev_cons,int idx,vector<vector<ll>> &dp)
+    ll recur(int N,int k,int p,int idx,vector<vector<ll>> &dp)
     {
         if(idx == N) return 1;
         
-        if(dp[idx][prev_cons] != -1)
-            return  dp[idx][prev_cons];
+        if(dp[idx][p] != -1)
+            return  dp[idx][p];
         
-        if(prev_cons >= k)
-            return dp[idx][prev_cons] = (21%mod * recur(N,k,0,idx+1,dp)%mod)%mod;
+        if(p >= k)
+        {
+            return dp[idx][p] = (recur(N,k,0,idx+1,dp)%mod*21%mod)%mod;
+        }
         else
-            return dp[idx][prev_cons] = ((5%mod * recur(N,k,prev_cons+1,idx+1,dp))%mod + (21%mod * recur(N,k,0,idx+1,dp)%mod)%mod)%mod;
+        {
+            return dp[idx][p] = ((recur(N,k,p+1,idx+1,dp))%mod*5%mod  + (21%mod * recur(N,k,0,idx+1,dp)%mod)%mod)%mod;
+        }
     }
     
     int kvowelwords(int N, int K) 
